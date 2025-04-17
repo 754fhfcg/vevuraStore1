@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>vevura</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    @font-face {
+      font-family: 'Didot';
+      src: url('Didot Bold.otf') format('opentype');
+      font-weight: bold;
+    }
+
+    @font-face {
+      font-family: 'GESSS';
+      src: url('GE SS Unique Bold.otf') format('opentype');
+      font-weight: bold;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.4s ease;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #fdfbe6;
+      color: #6a7751;
+      font-family: 'GESSS', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .welcome-message {
+      position: fixed;
+      top: -100px;
+      right: 50%;
+      transform: translateX(50%);
+      background-color: #6a7751;
+      color: #f5f1dc;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.2em;
+      opacity: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: welcomeIn 1.8s ease forwards;
+    }
+
+    @keyframes welcomeIn {
+      0% { opacity: 0; top: -100px; }
+      50% { opacity: 1; top: 40px; }
+      100% { opacity: 0; top: -100px; }
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+    }
+
+    .theme-toggle button {
+      background-color: #6a7751;
+      color: #fdfbe6;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .theme-toggle button:hover {
+      background-color: #586842;
+    }
+
+    .theme-toggle i {
+      font-size: 18px;
+    }
+
+    .top-bar-wrapper {
+      position: relative;
+      z-index: 2;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      font-size: 8vw;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      font-family: 'Didot', serif;
+    }
+
+    .small-logo img {
+      width: 10vw;
+      max-width: 50px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .divider-pattern {
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background-image: url('batern.jpg');
+      background-repeat: repeat-x;
+      background-size: auto 100px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .big-logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 40px 0;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .big-logo-container img {
+      width: 70vw;
+      max-width: 250px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .big-logo-container img:hover,
+    .small-logo img:hover {
+      transform: scale(1.05);
+    }
+
+    .about, .buttons {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .fade-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    .about {
+      font-size: 5vw;
+      margin-bottom: 40px;
+      text-align: center;
+      line-height: 1.8;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: 'GESSS', sans-serif;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .buttons a {
+      background-color: #518f43;
+      color: #f5f1dc;
+      padding: 15px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 5vw;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .buttons a:hover {
+      background-color: #5d6947;
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 8px #7aad67;
+    }
+
+    .buttons a i {
+      margin-left: 8px;
+    }
+
+    @media (min-width: 768px) {
+      .top-bar h1 { font-size: 36px; }
+      .about { font-size: 20px; }
+      .buttons a { font-size: 20px; }
+      .small-logo img { width: 40px; }
+    }
+
+    /* الوضع الداكن */
+    body.dark-mode {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .top-bar h1,
+    body.dark-mode .about,
+    body.dark-mode .buttons a {
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .buttons a {
+      background-color: #444;
+      box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+    }
+
+    body.dark-mode .buttons a:hover {
+      background-color: #333;
+      box-shadow: 0 6px 12px rgba(255,255,255,0.2);
+    }
+
+    body.dark-mode .theme-toggle button {
+      background-color: #444;
+      color: #fff;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="welcome-message">أهلاً بك في VEVURA!!!!</div>
+
+  <div class="theme-toggle">
+    <button id="toggle-theme" onclick="toggleTheme()">
+      <i id="theme-icon" class="fas fa-sun"></i>
+    </button>
+  </div>
+
+  <div class="top-bar-wrapper">
+    <div class="top-bar">
+      <h1>VEVURA</h1>
+      <div class="small-logo">
+        <img src="vevimg2.jpg" alt="شعار صغير">
+      </div>
+    </div>
+    <div class="divider-pattern"></div>
+  </div>
+
+  <div class="big-logo-container fade-element">
+    <img src="vev.jpg" alt="شعار كبير">
+  </div>
+
+  <div class="about fade-element">
+    حُسن الذوق يبدأ بالاختيار الصحيح
+  </div>
+
+  <div class="buttons fade-element">
+    <a href="https://wa.me/+967778378219" onclick="playClick()"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    <a href="https://facebook.com/صفحتك" onclick="playClick()"><i class="fab fa-facebook"></i> FaceBook</a>
+    <a href="https://www.instagram.com/ve.vur4?igsh=MTJ1MmF0cXg4c3dyZA==" onclick="playClick()"><i class="fab fa-instagram"></i> Instagram</a>
+  </div>
+
+  <audio id="click-sound" src="click.mp3" preload="auto"></audio>
+
+  <script>
+    const faders = document.querySelectorAll('.fade-element');
+    const themeIcon = document.getElementById("theme-icon");
+    const themeToggleBtn = document.getElementById("toggle-theme");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(el => observer.observe(el));
+
+    function playClick() {
+      const sound = document.getElementById("click-sound");
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      themeIcon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+
+    // عند التحميل، استرجاع التفضيل
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeIcon.className = "fas fa-moon";
+      } else {
+        themeIcon.className = "fas fa-sun";
+      }
+    });
+  </script>
+
+</body>
+</html>
